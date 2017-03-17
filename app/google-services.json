@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1011281863358",
+    "firebase_url": "https://sonicshop-b420b.firebaseio.com",
+    "project_id": "sonicshop-b420b",
+    "storage_bucket": "sonicshop-b420b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011281863358:android:edf582f09219f4fb",
+        "android_client_info": {
+          "package_name": "com.example.sudarshan.sonicshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011281863358-1s9c9h5ud9ucpeocl4578jic5hj00om2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sudarshan.sonicshop",
+            "certificate_hash": "9617294467581c253d5bbe720d757b1fcfc1db4a"
+          }
+        },
+        {
+          "client_id": "1011281863358-v1ruseil2qhlh79mhgb9epp5vfb1tal8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPd5dYQr-UJZpG9vBwGHWBZMN0UFjNH3U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011281863358-v1ruseil2qhlh79mhgb9epp5vfb1tal8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

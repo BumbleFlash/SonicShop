@@ -6,14 +6,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class Shop extends AppCompatActivity {
     private ArrayList<itemClass> items;
     private itemsAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_shop);
 
         items = new ArrayList<>();
         items.add(new itemClass("AMD Radeon R5 M330",6000 ));
@@ -29,17 +28,5 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new itemsAdapter(this, items);
         ListView listView = (ListView)findViewById(R.id.list_view);
         listView.setAdapter(mAdapter);
-
-
-
-
-
-
-
-
-
-
-
     }
-
 }
