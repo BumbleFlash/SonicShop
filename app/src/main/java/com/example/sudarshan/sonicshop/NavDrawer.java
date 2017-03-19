@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.sudarshan.sonicshop.fragments.CartFragment;
 import com.example.sudarshan.sonicshop.fragments.ProductListFragment;
 
 public class NavDrawer extends AppCompatActivity
@@ -76,7 +77,9 @@ public class NavDrawer extends AppCompatActivity
 
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.content_frame, new ProductListFragment()).commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_cart) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.content_frame, new CartFragment()).commit();
 
         } else if (id == R.id.nav_slideshow) {
 
