@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1011281863358-clu9f14e8t22oqigh4jvdigjkt0r6c4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sudarshan.sonicshop",
+            "certificate_hash": "22e2aada1a27665c576c1205800e28bbdb48c1da"
+          }
+        },
+        {
           "client_id": "1011281863358-1s9c9h5ud9ucpeocl4578jic5hj00om2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

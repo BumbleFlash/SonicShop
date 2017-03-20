@@ -29,7 +29,7 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.cart_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view_layout, container, false);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

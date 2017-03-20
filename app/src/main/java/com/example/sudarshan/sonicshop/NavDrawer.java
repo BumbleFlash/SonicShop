@@ -23,6 +23,7 @@ public class NavDrawer extends AppCompatActivity
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Sonic Shop");
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,10 +75,12 @@ public class NavDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_products) {
+            setTitle("Products");
 
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.content_frame, new ProductListFragment()).commit();
         } else if (id == R.id.nav_cart) {
+            setTitle("Cart");
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.content_frame, new CartFragment()).commit();
 
