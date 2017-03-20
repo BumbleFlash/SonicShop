@@ -33,9 +33,11 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Product product = getItem(position);
         TextView itemNameTV = (TextView)listItemView.findViewById(R.id.item_name);
         TextView itemPrice = (TextView)listItemView.findViewById(R.id.plist_price_text);
-        itemNameTV.setText(product.getProductName());
-//        itemPrice.setText(""+product.getProductPrice());
-        return listItemView;
+
+//        itemNameTV.setText(""+product.getProductName());
+//    itemPrice.setText(""+product.getProductPrice());
+//
+return listItemView;
 
 
     }
