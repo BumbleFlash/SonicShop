@@ -95,24 +95,28 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/ic_minus"
+                android:id="@+id/dec"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"/>
+                android:text="0"
+                android:id="@+id/quantity"/>
             <Button
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/ic_plus"/>
+                android:background="@drawable/ic_plus"
+                android:id="@+id/inc"/>
             </LinearLayout>
 
         <Button
-            android:text="Button"
+            android:text="Add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/add_to_cart"
             android:layout_weight="1"
-            tools:text="Add" />
+
+            />
     </LinearLayout>
 
 </RelativeLayout>

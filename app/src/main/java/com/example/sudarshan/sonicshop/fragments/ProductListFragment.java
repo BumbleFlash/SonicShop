@@ -3,18 +3,26 @@ package com.example.sudarshan.sonicshop.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.R;
 import com.example.sudarshan.sonicshop.models.Product;
+import com.example.sudarshan.sonicshop.users;
+import com.firebase.ui.FirebaseUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,10 +36,16 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Product> products = new ArrayList<>();
+    Button inc,dec;
+    static int i=0;
+    TextView quantity;
+    DatabaseReference ref;
+        String u;
+    users us= new users();
+    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     public ProductListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +56,9 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
          layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference();
+
+        ref= FirebaseDatabase.getInstance().getReference();
+        u= user.getUid();
 
 
 //        products.add(new Product("Whatever",999.00,2));
@@ -65,19 +81,39 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
 //                itemPrice.setText(""+p.getPrice());
 //            }
 //        };
+
+
         mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
                    R.layout.list_item, ListItemViewHolder.class, ref.child("items")) {
             @Override
-            protected void populateViewHolder(ListItemViewHolder viewHolder, Product model, int position) {
+            protected void populateViewHolder(final ListItemViewHolder viewHolder, Product model, final int position) {
               viewHolder.itemNameTV.setText(model.getProductName());
                 viewHolder.itemPrice.setText(""+model.getPrice());
                 Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
+
+                viewHolder.add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String n= viewHolder.itemNameTV.getText().toString();
+                        double p= Double.parseDouble(viewHolder.itemPrice.getText().toString());
+
+                        us.setUname(n);
+                        us.setUprice(p);
+
+                        ref.child("users").child(u).child(""+i).setValue(us);
+                        i++;
+
+
+                        Toast.makeText(getActivity(),"Added to Cart!",Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
 
             }
         };
           recyclerView.setAdapter(mAdapter);
+
 //        listView.setAdapter(mAdapter);
 
         //listView.setAdapter(mAdapter);
@@ -148,12 +184,14 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     public static class ListItemViewHolder extends RecyclerView.ViewHolder{
         TextView itemNameTV, itemPrice;
         ImageView imageView;
+        Button add;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
              itemNameTV = (TextView)itemView.findViewById(R.id.item_name);
              itemPrice = (TextView)itemView.findViewById(R.id.plist_price_text);
             imageView = (ImageView)itemView.findViewById(R.id.list_image);
+             add= (Button)itemView.findViewById(R.id.add_to_cart);
 
         }
     }

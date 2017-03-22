@@ -7,14 +7,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sudarshan.sonicshop.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by admin on 3/19/2017.
  */
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-    private String[] itemName= {"Pineapple", "Apple", "Orange", "Strawberry"};
-    private String[] itemPrice = {"350","234","324","343"};
+    private String[] itemName;
+    private String[] itemPrice;
+    DatabaseReference ref= FirebaseDatabase.getInstance().getReference();
+
+    public CartAdapter(DatabaseReference ref) {
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView itemNameTV, itemPriceTV;
