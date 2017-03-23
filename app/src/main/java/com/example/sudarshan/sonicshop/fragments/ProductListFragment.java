@@ -108,7 +108,11 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
                     @Override
                     public void onClick(View v) {
                         q= Integer.parseInt(viewHolder.quantity.getText().toString());
+                        if(q!=0&&q==1)
                         q--;
+                        else
+                        Toast. makeText(getActivity(),"Can't decrease more",Toast.LENGTH_SHORT).show();
+
                         viewHolder.quantity.setText(""+q);
                     }
                 });

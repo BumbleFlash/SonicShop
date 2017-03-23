@@ -49,19 +49,26 @@
                     android:text="Price: Rs. 250"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cart_item_quantity"
+                    android:text="Quantity: "
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    />
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:text="Place Order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="50dp"
-            android:id="@+id/cart_button_buy"
-           />
+        <!--<Button-->
+            <!--android:text="Place Order"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginTop="50dp"-->
+            <!--android:id="@+id/cart_button_buy"-->
+           <!--/>-->
 
 
     </RelativeLayout>

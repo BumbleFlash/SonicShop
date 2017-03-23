@@ -33,6 +33,12 @@ public class Cart {
         this.cartitem=cartitem;
         this.quantity=quantity;
     }
+    public Cart(String uname, double uprice,int quantity) {
+        this.uname = uname;
+        this.uprice = uprice;
+
+        this.quantity=quantity;
+    }
     public Cart(){}
 
     public String getUname() {
