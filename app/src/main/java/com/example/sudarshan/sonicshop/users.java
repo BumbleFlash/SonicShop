@@ -8,6 +8,15 @@ public class users {
     public String uname;
     public double uprice;
     public String uid;
+    public int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String getUserid() {
         return uid;
@@ -19,10 +28,11 @@ public class users {
 
     public users(){}
 
-    public users(String uname, double uprice,String uid) {
+    public users(String uname, double uprice,String uid,int quantity) {
         this.uname = uname;
         this.uprice = uprice;
         this.uid= uid;
+        this.quantity=quantity;
     }
 
     public double getUprice() {

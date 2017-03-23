@@ -9,6 +9,15 @@ public class Cart {
 
     public double uprice;
     public int cartitem;
+    public int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getCartitem() {
         return cartitem;
@@ -18,10 +27,11 @@ public class Cart {
         this.cartitem = cartitem;
     }
 
-    public Cart(String uname, double uprice, int cartitem) {
+    public Cart(String uname, double uprice, int cartitem,int quantity) {
         this.uname = uname;
         this.uprice = uprice;
         this.cartitem=cartitem;
+        this.quantity=quantity;
     }
     public Cart(){}
 

@@ -23,8 +23,11 @@ import com.firebase.ui.FirebaseUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -38,8 +41,9 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     ArrayList<Product> products = new ArrayList<>();
     Button inc,dec;
     static int i=0;
+    int q;
     TextView quantity;
-    DatabaseReference ref;
+    DatabaseReference ref,ref2;
         String u;
     users us= new users();
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
@@ -58,6 +62,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
 
 
         ref= FirebaseDatabase.getInstance().getReference();
+        ref2= FirebaseDatabase.getInstance().getReference("users");
         u= user.getUid();
 
 
@@ -91,14 +96,45 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
                 viewHolder.itemPrice.setText(""+model.getPrice());
                 Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
 
+                viewHolder.inc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        q= Integer.parseInt(viewHolder.quantity.getText().toString());
+                        q++;
+                        viewHolder.quantity.setText(""+q);
+                    }
+                });
+                viewHolder.dec.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        q= Integer.parseInt(viewHolder.quantity.getText().toString());
+                        q--;
+                        viewHolder.quantity.setText(""+q);
+                    }
+                });
                 viewHolder.add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String n= viewHolder.itemNameTV.getText().toString();
                         double p= Double.parseDouble(viewHolder.itemPrice.getText().toString());
-
+                        int qt= Integer.parseInt(viewHolder.quantity.getText().toString());
                         us.setUname(n);
                         us.setUprice(p);
+                        us.setQuantity(qt);
+                        ref2.child(u).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot d: dataSnapshot.getChildren())
+                                {
+                                    i++;
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
 
                         ref.child("users").child(u).child(""+i).setValue(us);
                         i++;
@@ -182,9 +218,9 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         return view;
     }
     public static class ListItemViewHolder extends RecyclerView.ViewHolder{
-        TextView itemNameTV, itemPrice;
+        TextView itemNameTV, itemPrice,quantity;
         ImageView imageView;
-        Button add;
+        Button add,inc,dec;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
@@ -192,6 +228,10 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
              itemPrice = (TextView)itemView.findViewById(R.id.plist_price_text);
             imageView = (ImageView)itemView.findViewById(R.id.list_image);
              add= (Button)itemView.findViewById(R.id.add_to_cart);
+            inc= (Button)itemView.findViewById(R.id.inc);
+            quantity= (TextView)itemView.findViewById(R.id.quantity);
+            dec= (Button)itemView.findViewById(R.id.dec);
+
 
         }
     }
