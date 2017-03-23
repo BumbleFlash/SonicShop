@@ -73,6 +73,8 @@ DataSnapshot dataSnapshot;
                 for(DataSnapshot d: dataSnapshot.getChildren())
                 {   Cart c=d.getValue(Cart.class);
                     carts.add(c);
+                    sum= sum+ (c.getUprice()*c.getQuantity());
+                    Log.d("sum",""+sum);
                 }
             }
 
@@ -96,6 +98,7 @@ DataSnapshot dataSnapshot;
                 rv.setLayoutManager(mLayoutManager);
                 rv.setAdapter(o);
                 Button confirm=(Button)dialog.findViewById(R.id.ok);
+                confirm.setText("Pay(₹"+ sum+")");
                 Button cancel=(Button)dialog.findViewById(R.id.cancel);
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override

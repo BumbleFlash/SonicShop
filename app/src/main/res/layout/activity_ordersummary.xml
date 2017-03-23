@@ -10,7 +10,7 @@
     android:layout_height="wrap_content">
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:id="@+id/dialog_rec_view">
 
     </android.support.v7.widget.RecyclerView>
@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/cancel"
         android:text="cancel"
+        android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/ok"
         android:layout_height="wrap_content"  />
 </RelativeLayout>
