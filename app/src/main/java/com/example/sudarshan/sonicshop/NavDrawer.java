@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sudarshan.sonicshop.fragments.CartFragment;
@@ -18,11 +20,16 @@ import com.example.sudarshan.sonicshop.fragments.ProductListFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.w3c.dom.Text;
+
 import static android.R.attr.id;
 
 public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-TextView mail, n;
+TextView mail,n,em,nm;
+    ImageView img;
+    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    NavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +45,9 @@ TextView mail, n;
 //        Log.d("Mail", mail+" "+n);
 //        mail.setText(email);
 //        n.setText(usname);
-
+        nav= (NavigationView) findViewById(R.id.nav_view);
+        onNavigationItemSelected(nav.getMenu().findItem(R.id.nav_products));
+        onNavigationItemSelected(nav.getMenu().getItem(0));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,7 +116,15 @@ TextView mail, n;
 //        } else if (id == R.id.nav_send) {
 //
 //        }
-
+        View header=nav.getHeaderView(0);
+        em= (TextView)header.findViewById(R.id.text_email);
+        nm= (TextView)header.findViewById(R.id.text_name);
+        img= (ImageView)header.findViewById(R.id.display_photo);
+        String email= user.getEmail();
+        String name= user.getDisplayName();
+        em.setText(""+ email);
+        nm.setText(""+name);
+        img.setImageURI(user.getPhotoUrl());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

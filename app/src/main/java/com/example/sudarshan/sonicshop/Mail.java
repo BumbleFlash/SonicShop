@@ -1,23 +1,25 @@
 package com.example.sudarshan.sonicshop;
 
-import java.net.PasswordAuthentication;
+
 import java.util.Date;
 import java.util.Properties;
 
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.activation.MailcapCommandMap;
 import javax.mail.BodyPart;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.sql.DataSource;
 
-import retrofit2.http.Multipart;
+
 
 /**
  * Created by Sudarshan on 23-03-2017.
@@ -52,7 +54,7 @@ class Mail extends javax.mail.Authenticator {
         _debuggable = false; // debug mode on or off - default off
         _auth = true; // smtp authentication - default on
 
-        _multipart = (Multipart) new MimeMultipart();
+        _multipart =  new MimeMultipart();
 
         // There is something wrong with MailCap, javamail can not find a handler for the multipart/mixed part, so this bit needs to be added.
         MailcapCommandMap mc = (MailcapCommandMap) CommandMap.getDefaultCommandMap();

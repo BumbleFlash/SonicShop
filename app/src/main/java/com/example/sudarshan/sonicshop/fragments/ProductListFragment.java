@@ -39,7 +39,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Product> products = new ArrayList<>();
-    Button inc,dec;
+    Button inc,dec,b;
     static int i=0;
     int q;
     TextView quantity;
@@ -59,8 +59,11 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
          recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
          layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        String email= user.getEmail();
+        String name= user.getDisplayName();
 
-
+        b= (Button)view.findViewById(R.id.place_order);
+        b.setVisibility(view.INVISIBLE);
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
         u= user.getUid();
