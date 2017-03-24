@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Product> products = new ArrayList<>();
-    Button inc,dec,b;
+    Button inc,dec;
     static int i=0;
     int q;
     TextView quantity;
@@ -59,11 +60,9 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
          recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
          layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        String email= user.getEmail();
-        String name= user.getDisplayName();
 
-        b= (Button)view.findViewById(R.id.place_order);
-        b.setVisibility(view.INVISIBLE);
+final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findViewById(R.id.avi);
+        progressBar.show();
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
         u= user.getUid();
@@ -98,6 +97,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
               viewHolder.itemNameTV.setText(model.getProductName());
                 viewHolder.itemPrice.setText(""+model.getPrice());
                 Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
+
 
                 viewHolder.inc.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -147,6 +147,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
                         i++;
 
 
+
                         Toast.makeText(getActivity(),"Added to Cart!",Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -155,7 +156,18 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
 
             }
         };
-          recyclerView.setAdapter(mAdapter);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                progressBar.hide();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
 
 //        listView.setAdapter(mAdapter);
 
