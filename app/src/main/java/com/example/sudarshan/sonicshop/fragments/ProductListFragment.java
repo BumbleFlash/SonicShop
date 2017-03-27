@@ -3,11 +3,12 @@ package com.example.sudarshan.sonicshop.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.R;
 import com.example.sudarshan.sonicshop.models.Product;
 import com.example.sudarshan.sonicshop.users;
-import com.firebase.ui.FirebaseUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,12 +40,13 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Product> products = new ArrayList<>();
-    Button inc,dec,button;
+    Button inc,dec;
     static int i=0;
     int q;
+    Button b;
     TextView quantity;
     DatabaseReference ref,ref2;
-        String u,img;
+        String u;
     users us= new users();
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     public ProductListFragment() {
@@ -53,21 +54,40 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.spinner_menu_layout,menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id= item.getItemId();
+        switch(id)
+        {
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.recycler_view_layout, container, false);
 //        final ListView listView = (ListView)view.findViewById(R.id.products_listview);
          recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
          layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
+        setHasOptionsMenu(true);
+        b= (Button)view.findViewById(R.id.place_order);
+        b.setVisibility(view.INVISIBLE);
 final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findViewById(R.id.avi);
         progressBar.show();
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
         u= user.getUid();
-        button= (Button)view.findViewById(R.id.place_order);
-        button.setVisibility(view.INVISIBLE);
+
 
 //        products.add(new Product("Whatever",999.00,2));
 //        products.add(new Product("Whatever1",999.00,2));
@@ -92,7 +112,7 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
 
 
         mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
-                   R.layout.list_item, ListItemViewHolder.class, ref.child("items").child("category").child("computer science")) {
+                   R.layout.list_item, ListItemViewHolder.class, ref.child("items")) {
             @Override
             protected void populateViewHolder(final ListItemViewHolder viewHolder, Product model, final int position) {
               viewHolder.itemNameTV.setText(model.getProductName());
@@ -114,7 +134,7 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
                         q= Integer.parseInt(viewHolder.quantity.getText().toString());
                         if(q!=0&&q==1)
                         q--;
-                        else
+
                         Toast. makeText(getActivity(),"Can't decrease more",Toast.LENGTH_SHORT).show();
 
                         viewHolder.quantity.setText(""+q);
@@ -129,8 +149,6 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
                         us.setUname(n);
                         us.setUprice(p);
                         us.setQuantity(qt);
-
-
                         ref2.child(u).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -159,6 +177,7 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
 
             }
         };
+
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

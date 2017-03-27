@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.Cart;
 import com.example.sudarshan.sonicshop.Mail;
 import com.example.sudarshan.sonicshop.OrderSummaryAdapter;
@@ -38,9 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static android.os.Build.VERSION_CODES.N;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +83,7 @@ DataSnapshot dataSnapshot;
                 {   Cart c=d.getValue(Cart.class);
                     carts.add(c);
                     sum= sum+ (c.getUprice()*c.getQuantity());
-                    Log.d("sum",""+sum);g
+                    Log.d("sum",""+sum);
                 }
             }
 

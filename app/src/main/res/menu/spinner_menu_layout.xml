@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:icon="@drawable/ic_funnel_"
+        android:title="Filter"
+        android:id="@+id/funnel">
+    <item android:title="Computer Science"
+        app:showAsAction="never"
+        android:id="@+id/cat_computer" />
+    <item android:title="Biology"
+        app:showAsAction="never"
+        android:id="@+id/cat_biology" />
+    <item android:title="Electrical"
+        app:showAsAction="never"
+        android:id="@+id/cat_electrical"
+        android:background="#ff00"/>
+    <item android:title="Physics"
+        app:showAsAction="never"
+        android:id="@+id/cat_physics"
+        android:background="#ff00"/>
+    </item>
+</menu>
