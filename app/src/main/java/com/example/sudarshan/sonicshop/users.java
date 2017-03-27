@@ -9,6 +9,15 @@ public class users {
     public double uprice;
     public String uid;
     public int quantity;
+//    public String Picurl;
+
+//    public String getPicurl() {
+//        return Picurl;
+//    }
+//
+//    public void setPictureurl(String picurl) {
+//        Picurl = picurl;
+//    }
 
     public int getQuantity() {
         return quantity;
@@ -33,6 +42,7 @@ public class users {
         this.uprice = uprice;
         this.uid= uid;
         this.quantity=quantity;
+//        this.Picurl=Picurl;
     }
 
     public double getUprice() {

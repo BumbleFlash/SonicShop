@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMultipart;
  * Created by Sudarshan on 23-03-2017.
  */
 
-class Mail extends javax.mail.Authenticator {
+public class Mail extends javax.mail.Authenticator {
     private final boolean _auth;
     private final boolean _debuggable;
     private final Multipart _multipart;

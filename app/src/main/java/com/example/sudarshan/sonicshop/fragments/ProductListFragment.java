@@ -40,12 +40,12 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Product> products = new ArrayList<>();
-    Button inc,dec;
+    Button inc,dec,button;
     static int i=0;
     int q;
     TextView quantity;
     DatabaseReference ref,ref2;
-        String u;
+        String u,img;
     users us= new users();
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     public ProductListFragment() {
@@ -66,7 +66,8 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
         u= user.getUid();
-
+        button= (Button)view.findViewById(R.id.place_order);
+        button.setVisibility(view.INVISIBLE);
 
 //        products.add(new Product("Whatever",999.00,2));
 //        products.add(new Product("Whatever1",999.00,2));
@@ -91,7 +92,7 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
 
 
         mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
-                   R.layout.list_item, ListItemViewHolder.class, ref.child("items")) {
+                   R.layout.list_item, ListItemViewHolder.class, ref.child("items").child("category").child("computer science")) {
             @Override
             protected void populateViewHolder(final ListItemViewHolder viewHolder, Product model, final int position) {
               viewHolder.itemNameTV.setText(model.getProductName());
@@ -128,6 +129,8 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
                         us.setUname(n);
                         us.setUprice(p);
                         us.setQuantity(qt);
+
+
                         ref2.child(u).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {

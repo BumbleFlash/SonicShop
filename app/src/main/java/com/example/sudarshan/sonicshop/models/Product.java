@@ -11,11 +11,11 @@ public class Product {
     private int item;
     private String Picurl;
 
-    public Product(String productName, double price, int item, String picurl) {
+    public Product(String productName, double price, int item,String picurl) {
         ProductName = productName;
         Price = price;
         this.item = item;
-        Picurl = picurl;
+        this.Picurl = picurl;
     }
 
     public String getPicurl() {

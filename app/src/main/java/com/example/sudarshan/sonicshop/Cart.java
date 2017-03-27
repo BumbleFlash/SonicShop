@@ -11,6 +11,15 @@ public class Cart {
     public int cartitem;
     public int quantity;
 
+
+//    public String getPicurl() {
+//        return Picurl;
+//    }
+//
+//    public void setPicurl(String picurl) {
+//        Picurl = picurl;
+//    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -32,6 +41,7 @@ public class Cart {
         this.uprice = uprice;
         this.cartitem=cartitem;
         this.quantity=quantity;
+
     }
     public Cart(String uname, double uprice,int quantity) {
         this.uname = uname;

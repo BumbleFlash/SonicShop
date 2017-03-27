@@ -40,5 +40,13 @@
     app:indicatorName="LineScaleIndicator"
     app:indicatorColor="#483d8b"
     />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/place_order"
+        android:gravity="bottom"
+        android:layout_centerHorizontal="true"
+        android:text="Place Order"
+        android:layout_alignBottom="@id/recycler_view"/>
 
 </RelativeLayout>
