@@ -45,7 +45,9 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     int q;
     Button b;
     TextView quantity;
-    DatabaseReference ref,ref2;
+    AVLoadingIndicatorView progressBar;
+    DatabaseReference ref,ref2,ref3,ref4;
+
         String u;
     users us= new users();
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
@@ -62,8 +64,29 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id= item.getItemId();
+
         switch(id)
         {
+            case R.id.cat_computer:
+                ref4= ref3.child("computer science");
+                Ada(ref4);
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.cat_biology:
+                ref4= ref3.child("biology");
+                Ada(ref4);
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.cat_electrical:
+                ref4= ref3.child("electrical");
+                Ada(ref4);
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.cat_physics:
+                ref4= ref3.child("physics");
+                Ada(ref4);
+                mAdapter.notifyDataSetChanged();
+                break;
 
         }
 
@@ -82,11 +105,13 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         setHasOptionsMenu(true);
         b= (Button)view.findViewById(R.id.place_order);
         b.setVisibility(view.INVISIBLE);
-final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findViewById(R.id.avi);
+        progressBar = (AVLoadingIndicatorView)view.findViewById(R.id.avi);
         progressBar.show();
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
+        ref3= FirebaseDatabase.getInstance().getReference("items").child("category");
         u= user.getUid();
+        Ada(ref3.child("computer science"));
 
 
 //        products.add(new Product("Whatever",999.00,2));
@@ -110,86 +135,7 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
 //            }
 //        };
 
-
-        mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
-                   R.layout.list_item, ListItemViewHolder.class, ref.child("items")) {
-            @Override
-            protected void populateViewHolder(final ListItemViewHolder viewHolder, Product model, final int position) {
-              viewHolder.itemNameTV.setText(model.getProductName());
-                viewHolder.itemPrice.setText(""+model.getPrice());
-                Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
-
-
-                viewHolder.inc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        q= Integer.parseInt(viewHolder.quantity.getText().toString());
-                        q++;
-                        viewHolder.quantity.setText(""+q);
-                    }
-                });
-                viewHolder.dec.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        q= Integer.parseInt(viewHolder.quantity.getText().toString());
-                        if(q!=0&&q==1)
-                        q--;
-
-                        Toast. makeText(getActivity(),"Can't decrease more",Toast.LENGTH_SHORT).show();
-
-                        viewHolder.quantity.setText(""+q);
-                    }
-                });
-                viewHolder.add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String n= viewHolder.itemNameTV.getText().toString();
-                        double p= Double.parseDouble(viewHolder.itemPrice.getText().toString());
-                        int qt= Integer.parseInt(viewHolder.quantity.getText().toString());
-                        us.setUname(n);
-                        us.setUprice(p);
-                        us.setQuantity(qt);
-                        ref2.child(u).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for(DataSnapshot d: dataSnapshot.getChildren())
-                                {
-                                    i++;
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        ref.child("users").child(u).child(""+i).setValue(us);
-                        i++;
-
-
-
-                        Toast.makeText(getActivity(),"Added to Cart!",Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-
-            }
-        };
-
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                progressBar.hide();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        recyclerView.setAdapter(mAdapter);
+        ref4= ref3.child("computer science");
 
 //        listView.setAdapter(mAdapter);
 
@@ -257,6 +203,7 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
 
 
         return view;
+
     }
     public static class ListItemViewHolder extends RecyclerView.ViewHolder{
         TextView itemNameTV, itemPrice,quantity;
@@ -277,5 +224,83 @@ final AVLoadingIndicatorView progressBar = (AVLoadingIndicatorView)view.findView
         }
     }
 
+    public void Ada(final DatabaseReference ref4) {
+        mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
+                R.layout.list_item, ListItemViewHolder.class, ref4) {
+            @Override
+            protected void populateViewHolder(final ListItemViewHolder viewHolder, Product model, final int position) {
+                viewHolder.itemNameTV.setText(model.getProductName());
+                viewHolder.itemPrice.setText("" + model.getPrice());
+                Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
 
+
+                viewHolder.inc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        q = Integer.parseInt(viewHolder.quantity.getText().toString());
+                        q++;
+                        viewHolder.quantity.setText("" + q);
+                    }
+                });
+                viewHolder.dec.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        q = Integer.parseInt(viewHolder.quantity.getText().toString());
+                        if (q != 0 && q == 1)
+                            q--;
+
+                        Toast.makeText(getActivity(), "Can't decrease more", Toast.LENGTH_SHORT).show();
+
+                        viewHolder.quantity.setText("" + q);
+                    }
+                });
+                viewHolder.add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String n = viewHolder.itemNameTV.getText().toString();
+                        double p = Double.parseDouble(viewHolder.itemPrice.getText().toString());
+                        int qt = Integer.parseInt(viewHolder.quantity.getText().toString());
+                        us.setUname(n);
+                        us.setUprice(p);
+                        us.setQuantity(qt);
+                        ref2.child(u).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                                    i++;
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        ref.child("users").child(u).child("" + i).setValue(us);
+                        i++;
+
+
+                        Toast.makeText(getActivity(), "Added to Cart!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
+        };
+
+        ref4.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                progressBar.hide();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
+    }
 }
