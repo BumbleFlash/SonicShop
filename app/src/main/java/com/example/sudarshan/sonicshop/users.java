@@ -6,7 +6,7 @@ package com.example.sudarshan.sonicshop;
 
 public class users {
     public String uname;
-    public double uprice;
+    public Double uprice;
     public String uid;
     public int quantity;
 //    public String Picurl;
@@ -37,7 +37,7 @@ public class users {
 
     public users(){}
 
-    public users(String uname, double uprice,String uid,int quantity) {
+    public users(String uname, Double uprice,String uid,int quantity) {
         this.uname = uname;
         this.uprice = uprice;
         this.uid= uid;
@@ -45,11 +45,11 @@ public class users {
 //        this.Picurl=Picurl;
     }
 
-    public double getUprice() {
+    public Double getUprice() {
         return uprice;
     }
 
-    public void setUprice(double uprice) {
+    public void setUprice(Double uprice) {
         this.uprice = uprice;
     }
 

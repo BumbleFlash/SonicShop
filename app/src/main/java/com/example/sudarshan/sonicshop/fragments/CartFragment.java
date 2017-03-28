@@ -82,7 +82,7 @@ DataSnapshot dataSnapshot;
                 for(DataSnapshot d: dataSnapshot.getChildren())
                 {   Cart c=d.getValue(Cart.class);
                     carts.add(c);
-                    sum= sum+ (c.getUprice()*c.getQuantity());
+                    sum= sum+ (Double.parseDouble(c.getUprice()+"")*c.getQuantity());
                     Log.d("sum",""+sum);
                 }
             }

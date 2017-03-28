@@ -6,12 +6,12 @@ package com.example.sudarshan.sonicshop.models;
 
 public class Product {
     private String ProductName;
-    private double Price;
+    private String Price;
 //    private static int mQuantity;
-    private int item;
+    private String item;
     private String Picurl;
 
-    public Product(String productName, double price, int item,String picurl) {
+    public Product(String productName, String price, String item,String picurl) {
         ProductName = productName;
         Price = price;
         this.item = item;
@@ -38,19 +38,19 @@ public class Product {
         ProductName = productName;
     }
 
-    public double getPrice() {
+    public String  getPrice() {
         return Price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         Price = price;
     }
 
-    public int getItem() {
+    public String getItem() {
         return item;
     }
 
-    public void setItem(int item) {
+    public void setItem(String item) {
         this.item = item;
     }
 }

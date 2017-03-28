@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ public class ProductListFragment extends Fragment {
 private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private Toolbar toolbar;
     ArrayList<Product> products = new ArrayList<>();
     Button inc,dec;
     static int i=0;
@@ -102,11 +104,14 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
          recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
          layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+//        toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_funnel_);
+//        toolbar.setOverflowIcon(drawable);
         setHasOptionsMenu(true);
-        b= (Button)view.findViewById(R.id.place_order);
-        b.setVisibility(view.INVISIBLE);
         progressBar = (AVLoadingIndicatorView)view.findViewById(R.id.avi);
         progressBar.show();
+        b= (Button)view.findViewById(R.id.place_order);
+        b.setVisibility(view.INVISIBLE);
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
         ref3= FirebaseDatabase.getInstance().getReference("items").child("category");
@@ -225,6 +230,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     }
 
     public void Ada(final DatabaseReference ref4) {
+        progressBar.show();
         mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
                 R.layout.list_item, ListItemViewHolder.class, ref4) {
             @Override
@@ -246,22 +252,24 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
                     @Override
                     public void onClick(View v) {
                         q = Integer.parseInt(viewHolder.quantity.getText().toString());
-                        if (q != 0 && q == 1)
+                        if (q > 0) {
                             q--;
+                            viewHolder.quantity.setText("" + q);
 
-                        Toast.makeText(getActivity(), "Can't decrease more", Toast.LENGTH_SHORT).show();
-
-                        viewHolder.quantity.setText("" + q);
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Can't decrease more", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 viewHolder.add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String n = viewHolder.itemNameTV.getText().toString();
-                        double p = Double.parseDouble(viewHolder.itemPrice.getText().toString());
+                        String p = viewHolder.itemPrice.getText().toString();
                         int qt = Integer.parseInt(viewHolder.quantity.getText().toString());
                         us.setUname(n);
-                        us.setUprice(p);
+                        us.setUprice(Double.parseDouble(p+""));
                         us.setQuantity(qt);
                         ref2.child(u).addValueEventListener(new ValueEventListener() {
                             @Override
