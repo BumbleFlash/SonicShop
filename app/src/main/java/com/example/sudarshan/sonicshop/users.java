@@ -9,15 +9,11 @@ public class users {
     public Double uprice;
     public String uid;
     public int quantity;
-//    public String Picurl;
+    public String Picurl;
 
-//    public String getPicurl() {
-//        return Picurl;
-//    }
-//
-//    public void setPictureurl(String picurl) {
-//        Picurl = picurl;
-//    }
+    public void setPic(String picurl) {
+        Picurl = picurl;
+    }
 
     public int getQuantity() {
         return quantity;

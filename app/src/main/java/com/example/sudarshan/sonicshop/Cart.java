@@ -10,15 +10,13 @@ public class Cart {
     public double uprice;
     public int cartitem;
     public int quantity;
+    public String Picurl;
 
 
-//    public String getPicurl() {
-//        return Picurl;
-//    }
-//
-//    public void setPicurl(String picurl) {
-//        Picurl = picurl;
-//    }
+    public String getPic() {
+        return Picurl;
+    }
+
 
     public int getQuantity() {
         return quantity;

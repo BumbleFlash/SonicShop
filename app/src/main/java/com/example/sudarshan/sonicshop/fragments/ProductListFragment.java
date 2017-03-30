@@ -234,7 +234,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
                 R.layout.list_item, ListItemViewHolder.class, ref4) {
             @Override
-            protected void populateViewHolder(final ListItemViewHolder viewHolder, Product model, final int position) {
+            protected void populateViewHolder(final ListItemViewHolder viewHolder, final Product model, final int position) {
                 viewHolder.itemNameTV.setText(model.getProductName());
                 viewHolder.itemPrice.setText("" + model.getPrice());
                 Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
@@ -270,6 +270,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
                         int qt = Integer.parseInt(viewHolder.quantity.getText().toString());
                         us.setUname(n);
                         us.setUprice(Double.parseDouble(p+""));
+                        us.setPic(model.getPicurl());
                         us.setQuantity(qt);
                         ref2.child(u).addValueEventListener(new ValueEventListener() {
                             @Override

@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.Cart;
 import com.example.sudarshan.sonicshop.Mail;
 import com.example.sudarshan.sonicshop.OrderSummaryAdapter;
@@ -99,13 +100,13 @@ DataSnapshot dataSnapshot;
 
                 LinearLayoutManager mLayoutManager;
                 dialog = new Dialog(getActivity());
-                OrderSummaryAdapter o=new OrderSummaryAdapter(carts);
+                OrderSummaryAdapter orderadapter = new OrderSummaryAdapter(carts);
                 dialog.setContentView(R.layout.activity_ordersummary);
                 RecyclerView rv=(RecyclerView)dialog.findViewById(R.id.dialog_rec_view);
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 rv.setHasFixedSize(true);
                 rv.setLayoutManager(mLayoutManager);
-                rv.setAdapter(o);
+                rv.setAdapter(orderadapter);
                 Button confirm=(Button)dialog.findViewById(R.id.ok);
                 confirm.setText("Pay(₹"+ sum+")");
                 Button cancel=(Button)dialog.findViewById(R.id.cancel);
@@ -179,7 +180,7 @@ DataSnapshot dataSnapshot;
                 viewHolder.cartviewname.setText("" + model.getUname());
                 viewHolder.cartviewprice.setText("Price: " + model.getUprice());
                 viewHolder.cartviewquantity.setText("Quantity: " + model.getQuantity());
-               // Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.img);
+                Glide.with(getActivity()).load(model.getPic()).placeholder(R.drawable.ic_basket).into(viewHolder.img);
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
