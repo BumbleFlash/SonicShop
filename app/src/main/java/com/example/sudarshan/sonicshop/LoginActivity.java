@@ -78,7 +78,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else {
                                 progressDialog.dismiss();
+
                                 onLoginFailed();
+
                             }
                         }
                     }, 2000);
@@ -96,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {

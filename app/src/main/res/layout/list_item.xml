@@ -10,6 +10,9 @@
     android:paddingLeft="0dip"
     android:paddingRight="0dip">
 
+
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

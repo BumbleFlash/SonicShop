@@ -22,6 +22,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static java.security.AccessController.getContext;
+
 
 public class ProductRvAdapter extends RecyclerView.Adapter<ProductRvAdapter.ViewHolder> {
 
@@ -48,7 +51,29 @@ public class ProductRvAdapter extends RecyclerView.Adapter<ProductRvAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.setData(myItems.get(position), mContext);
+holder.inc.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        int i= Integer.parseInt(holder.quantity.getText().toString());
+        i++;
+        holder.quantity.setText(i+"");
+    }
+});
+        holder.dec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int j= Integer.parseInt(holder.quantity.getText().toString());
+                if(j==1)
+                {
+                    Toast.makeText(getApplicationContext(),"Can't decrease more",Toast.LENGTH_SHORT).show();
 
+                }
+                else {
+                    j--;
+                    holder.quantity.setText(j + "");
+                }
+            }
+        });
 
     }
 

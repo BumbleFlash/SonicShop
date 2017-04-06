@@ -12,12 +12,10 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by krsnv on 16-Mar-17.
- */
+
 
 public class RetrofitBuilder {
-    public static final  String API_BASE_URL = "http://LOCALHOST:8080/SonicShopWeb/";
+    public static final  String API_BASE_URL = "http://192.168.10.13:8080/SonicShopWeb/";
 
     public static  OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addNetworkInterceptor(new StethoInterceptor());
 

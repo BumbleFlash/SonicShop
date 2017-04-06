@@ -77,7 +77,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
             case R.id.cat_computer:
                 callproduct("Computer Science");
                 //Ada(ref4);
-//                productAdapter.notifyDataSetChanged();
+//              productAdapter.notifyDataSetChanged();
                 break;
             case R.id.cat_biology:
                 callproduct("Biology");
@@ -94,7 +94,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
                 //Ada(ref4);
 //                productAdapter.notifyDataSetChanged();
                 break;
-
+//kk
         }
 
         return super.onOptionsItemSelected(item);
@@ -148,67 +148,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
 
         ref4= ref3.child("computer science");
 
-//        listView.setAdapter(mAdapter);
 
-        //listView.setAdapter(mAdapter);
-//        ref.child("items").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    Product p = postSnapshot.getValue(Product.class);
-//                    if (!products.contains(p) && products != null)
-//                        products.add(p);
-//
-//                }
-//                mAdapter = new ProductAdapter(getActivity(), products);
-//                listView.setAdapter(mAdapter);
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        ref.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s){
-//
-//               Product val= dataSnapshot.getValue(Product.class);
-//                products.add(val);
-//                mAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-////        });
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
-//        products.add(new Product("Pineapple", 250, 10));
 
 
 
@@ -272,6 +212,7 @@ public void callproduct(String s)
             List<Product> pr=response.body();
             productAdapter=new ProductRvAdapter(pr,getContext());
             recyclerView.setAdapter(productAdapter);
+            progressBar.hide();
 
         }
 
