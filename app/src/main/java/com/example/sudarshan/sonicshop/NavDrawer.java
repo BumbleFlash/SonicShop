@@ -28,7 +28,7 @@ public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 TextView mail,n,em,nm;
     ImageView img;
-    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+  //  FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     NavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +120,11 @@ TextView mail,n,em,nm;
         em= (TextView)header.findViewById(R.id.text_email);
         nm= (TextView)header.findViewById(R.id.text_name);
         img= (ImageView)header.findViewById(R.id.display_photo);
-        String email= user.getEmail();
-        String name= user.getDisplayName();
-        em.setText(""+ email);
-        nm.setText(""+name);
-        img.setImageURI(user.getPhotoUrl());
+      //  String email= user.getEmail();
+        //String name= user.getDisplayName();
+        //em.setText(""+ email);
+        //nm.setText(""+name);
+        //img.setImageURI(user.getPhotoUrl());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

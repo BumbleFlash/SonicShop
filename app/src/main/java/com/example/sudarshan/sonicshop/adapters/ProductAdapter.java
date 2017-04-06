@@ -12,6 +12,7 @@ import com.example.sudarshan.sonicshop.R;
 import com.example.sudarshan.sonicshop.models.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by admin on 3/18/2017.
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
 
-    public ProductAdapter(Activity context, ArrayList<Product> products){
+    public ProductAdapter(Activity context, List<Product> products){
         super(context,0, products);
     }
 

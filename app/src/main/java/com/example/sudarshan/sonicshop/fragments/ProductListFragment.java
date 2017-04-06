@@ -15,23 +15,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.example.sudarshan.sonicshop.ProductRvAdapter;
 import com.example.sudarshan.sonicshop.R;
+import com.example.sudarshan.sonicshop.RetrofitBuilder;
+import com.example.sudarshan.sonicshop.RetrofitInterface;
+import com.example.sudarshan.sonicshop.adapters.ProductAdapter;
 import com.example.sudarshan.sonicshop.models.Product;
 import com.example.sudarshan.sonicshop.users;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,10 +53,11 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
     TextView quantity;
     AVLoadingIndicatorView progressBar;
     DatabaseReference ref,ref2,ref3,ref4;
+    ProductRvAdapter productAdapter;
 
         String u;
     users us= new users();
-    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    //FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     public ProductListFragment() {
         // Required empty public constructor
     }
@@ -70,24 +75,24 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         switch(id)
         {
             case R.id.cat_computer:
-                ref4= ref3.child("computer science");
-                Ada(ref4);
-                mAdapter.notifyDataSetChanged();
+                callproduct("Computer Science");
+                //Ada(ref4);
+//                productAdapter.notifyDataSetChanged();
                 break;
             case R.id.cat_biology:
-                ref4= ref3.child("biology");
-                Ada(ref4);
-                mAdapter.notifyDataSetChanged();
+                callproduct("Biology");
+                //Ada(ref4);
+//                productAdapter.notifyDataSetChanged();
                 break;
             case R.id.cat_electrical:
-                ref4= ref3.child("electrical");
-                Ada(ref4);
-                mAdapter.notifyDataSetChanged();
+                callproduct("Electrical");
+                //Ada(ref4);
+//                productAdapter.notifyDataSetChanged();
                 break;
             case R.id.cat_physics:
-                ref4= ref3.child("physics");
-                Ada(ref4);
-                mAdapter.notifyDataSetChanged();
+                callproduct("Physics");
+                //Ada(ref4);
+//                productAdapter.notifyDataSetChanged();
                 break;
 
         }
@@ -115,8 +120,9 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         ref= FirebaseDatabase.getInstance().getReference();
         ref2= FirebaseDatabase.getInstance().getReference("users");
         ref3= FirebaseDatabase.getInstance().getReference("items").child("category");
-        u= user.getUid();
-        Ada(ref3.child("computer science"));
+      //  u= user.getUid();
+        callproduct("Computer Science");
+        //Ada(ref3.child("computer science"));
 
 
 //        products.add(new Product("Whatever",999.00,2));
@@ -210,6 +216,7 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         return view;
 
     }
+
     public static class ListItemViewHolder extends RecyclerView.ViewHolder{
         TextView itemNameTV, itemPrice,quantity;
         ImageView imageView;
@@ -229,87 +236,50 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
         }
     }
 
-    public void Ada(final DatabaseReference ref4) {
-        progressBar.show();
-        mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
-                R.layout.list_item, ListItemViewHolder.class, ref4) {
-            @Override
-            protected void populateViewHolder(final ListItemViewHolder viewHolder, final Product model, final int position) {
-                viewHolder.itemNameTV.setText(model.getProductName());
-                viewHolder.itemPrice.setText("" + model.getPrice());
-                Glide.with(getActivity()).load(model.getPicurl()).placeholder(R.drawable.ic_basket).into(viewHolder.imageView);
+//    public void Ada(final DatabaseReference ref4) {
+//        progressBar.show();
+//        mAdapter = new FirebaseRecyclerAdapter<Product, ListItemViewHolder>(Product.class,
+//                R.layout.list_item, ListItemViewHolder.class, ref4) {
+//            @Override
+//            protected void populateViewHolder(final ListItemViewHolder viewHolder, final Product model, final int position) {
+//                viewHolder.itemNameTV.setText(model.getProductName());
+//                viewHolder.itemPrice.setText("" + model.getPrice());
+//
+//
+//            }
+//        };
+//
+//        ref4.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                progressBar.hide();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//        recyclerView.setAdapter(mAdapter);
+//    }
+public void callproduct(String s)
+{
+    RetrofitInterface client= RetrofitBuilder.createService(RetrofitInterface.class);
+    Call<List<Product>> call = client.getallproducts(s);
+    call.enqueue(new Callback<List<Product>>() {
+        @Override
+        public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            List<Product> pr=response.body();
+            productAdapter=new ProductRvAdapter(pr,getContext());
+            recyclerView.setAdapter(productAdapter);
 
+        }
 
-                viewHolder.inc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        q = Integer.parseInt(viewHolder.quantity.getText().toString());
-                        q++;
-                        viewHolder.quantity.setText("" + q);
-                    }
-                });
-                viewHolder.dec.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        q = Integer.parseInt(viewHolder.quantity.getText().toString());
-                        if (q > 0) {
-                            q--;
-                            viewHolder.quantity.setText("" + q);
+        @Override
+        public void onFailure(Call<List<Product>> call, Throwable t) {
 
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "Can't decrease more", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                viewHolder.add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String n = viewHolder.itemNameTV.getText().toString();
-                        String p = viewHolder.itemPrice.getText().toString();
-                        int qt = Integer.parseInt(viewHolder.quantity.getText().toString());
-                        us.setUname(n);
-                        us.setUprice(Double.parseDouble(p+""));
-                        us.setPic(model.getPicurl());
-                        us.setQuantity(qt);
-                        ref2.child(u).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                                    i++;
-                                }
-                            }
+        }
+    });
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                        ref.child("users").child(u).child("" + i).setValue(us);
-                        i++;
-
-
-                        Toast.makeText(getActivity(), "Added to Cart!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-            }
-        };
-
-        ref4.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                progressBar.hide();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        recyclerView.setAdapter(mAdapter);
-    }
+}
 }
