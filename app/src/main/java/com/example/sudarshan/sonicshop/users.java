@@ -3,51 +3,37 @@ package com.example.sudarshan.sonicshop;
 /**
  * Created by Sudarshan on 20-03-2017.
  */
-
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 public class users {
+    @SerializedName("uname")
+    @Expose
     public String uname;
-    public Double uprice;
-    public String uid;
-    public int quantity;
-    public String Picurl;
+    @SerializedName("upassword")
+    @Expose
+    public String upassword;
 
-    public void setPic(String picurl) {
-        Picurl = picurl;
+    @SerializedName("uemail")
+    @Expose
+    public String uemail;
+
+    public users() {
+
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getUserid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public users(){}
-
-    public users(String uname, Double uprice,String uid,int quantity) {
+    public users(String uname, String upassword, String uemail) {
         this.uname = uname;
-        this.uprice = uprice;
-        this.uid= uid;
-        this.quantity=quantity;
-//        this.Picurl=Picurl;
+        this.upassword = upassword;
+        this.uemail = uemail;
     }
 
-    public Double getUprice() {
-        return uprice;
-    }
-
-    public void setUprice(Double uprice) {
-        this.uprice = uprice;
-    }
+//    public users(String uname, String upassword, String uid, String uemail) {
+//
+//        this.uname = uname;
+//        this.upassword = upassword;
+//
+//        this.umail = umail;
+//    }
 
     public String getUname() {
         return uname;
@@ -56,4 +42,30 @@ public class users {
     public void setUname(String uname) {
         this.uname = uname;
     }
+
+    public String getUpass() {
+        return upassword;
+    }
+
+    public void setUpass(String upassword) {
+        this.upassword = upassword;
+    }
+
+//    public String getUid() {
+//        return uid;
+//    }
+//
+//    public void setUid(String uid) {
+//        this.uid = uid;
+//    }
+
+    public String getUmail() {
+        return uemail;
+    }
+
+    public void setUmail(String umail) {
+        this.uemail = umail;
+    }
 }
+
+

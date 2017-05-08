@@ -10,8 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sudarshan.sonicshop.models.Product;
+import com.google.gson.Gson;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -63,19 +71,42 @@ public class SignupActivity extends AppCompatActivity {
         String name = inputName.getText().toString();
         String email = inputEmail.getText().toString();
         String password = inputPassword.getText().toString();
+        users u= new users(name,password,email);
+//        u.setUname(name);
+//        u.setUpass(password);
+//        u.setUmail(email);
 
-        // TODO: Implement your own signup logic here.
+        RetrofitInterface client= RetrofitBuilder.createService(RetrofitInterface.class);
+        Call<Void> call = client.setUsers(new Gson().toJson(u,users.class));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful())
+                {
+                    Toast.makeText(getApplicationContext(),"Signup Successful",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Signup Failed",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onSignupSuccess or onSignupFailed
+//                        // depending on success
+//                        onSignupSuccess();
+//                        // onSignupFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
     }
     private boolean isFormValid(){
         boolean valid = true;

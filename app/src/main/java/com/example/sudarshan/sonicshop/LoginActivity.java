@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,6 +62,24 @@ public class LoginActivity extends AppCompatActivity {
 
        final String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
+        users u;
+        RetrofitInterface client= RetrofitBuilder.createService(RetrofitInterface.class);
+        Call<users> call = client.auth(email,password);
+        call.enqueue(new Callback<users>() {
+            @Override
+            public void onResponse(Call<users> call, Response<users> response) {
+                if(response.isSuccessful())
+                {
+                   users u= response.body();
+                    Log.e(TAG, "onResponse: "+u.getUname());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<users> call, Throwable t) {
+
+            }
+        });
 //        if(!email.contentEquals("fag")&&!password.contentEquals("12345")){
 //            progressDialog.dismiss();
 //            Toast.makeText(getApplicationContext(),"Wrong Credentials",Toast.LENGTH_LONG);
@@ -68,22 +89,22 @@ public class LoginActivity extends AppCompatActivity {
 //        else {
 
 
-            // TODO: Implement your own authentication logic here.
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            // On complete call either onLoginSuccess or onLoginFailed
-                            if(email.contentEquals("fag")&&password.contentEquals("12345")){
-                                onLoginSuccess();
-                            }
-                            else {
-                                progressDialog.dismiss();
-
-                                onLoginFailed();
-
-                            }
-                        }
-                    }, 2000);
+//            // TODO: Implement your own authentication logic here.
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            // On complete call either onLoginSuccess or onLoginFailed
+//                            if(email.contentEquals("fag")&&password.contentEquals("12345")){
+//                                onLoginSuccess();
+//                            }
+//                            else {
+//                                progressDialog.dismiss();
+//
+//                                onLoginFailed();
+//
+//                            }
+//                        }
+//                    }, 2000);
     }
     private boolean isFormValid(){
         if(inputEmail.getText().toString().trim().isEmpty()){
