@@ -69,7 +69,7 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.show();
 
         String name = inputName.getText().toString();
-        String email = inputEmail.getText().toString();
+         final String email = inputEmail.getText().toString();
         String password = inputPassword.getText().toString();
         users u= new users(name,password,email);
 //        u.setUname(name);
@@ -85,6 +85,8 @@ public class SignupActivity extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(),"Signup Successful",Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+
+
                     startActivity(intent);
                 }
             }
@@ -96,6 +98,7 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {

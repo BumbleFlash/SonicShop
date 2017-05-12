@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -19,6 +23,8 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    static LoginActivity INS;
+    String data;
     @BindView(R.id.input_email)
     EditText inputEmail;
     @BindView(R.id.input_password)
@@ -32,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        INS=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -52,31 +59,60 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    public static LoginActivity getActivityInstance()
+    {
+        return INS;
+    }
+
+
+
+
+    public String getData()
+    {
+        return this.data;
+    }
+
     private void login(){
         btnLogin.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+
 
        final String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
-        users u;
+
         RetrofitInterface client= RetrofitBuilder.createService(RetrofitInterface.class);
         Call<users> call = client.auth(email,password);
+//        Cart c= new Cart();
+//        c.setUemail(email);
+        data= email;
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
         call.enqueue(new Callback<users>() {
             @Override
             public void onResponse(Call<users> call, Response<users> response) {
-                if(response.isSuccessful())
-                {
-                   users u= response.body();
-                    Log.e(TAG, "onResponse: "+u.getUname());
-                }
+
+                   if(response.isSuccessful()) {
+                       users u = response.body();
+                       u.setUname(email);
+                       u.setUpass(password);
+                       progressDialog.dismiss();
+                       Intent intent = new Intent(LoginActivity.this, NavDrawer.class);
+                       //intent.putExtra("Email",email);
+                       startActivity(intent);
+
+                       finish();
+                   }
+
             }
 
             @Override
             public void onFailure(Call<users> call, Throwable t) {
+                Log.e(TAG, "onFailure: "+t.getMessage() );
+                progressDialog.dismiss();
+                onLoginFailed();
+
 
             }
         });
@@ -120,17 +156,17 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == REQUEST_SIGNUP) {
+//            if (resultCode == RESULT_OK) {
+//
+//                // TODO: Implement successful signup logic here
+//                // By default we just finish the Activity and log them in automatically
+//                this.finish();
+//            }
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
@@ -147,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.i(TAG,"It's getting called");
         inputEmail.setText("");
         inputPassword.setText("");
+
         Toast.makeText(getApplicationContext(),"Wrong Credentials",Toast.LENGTH_LONG).show();
         btnLogin.setEnabled(true);
     }

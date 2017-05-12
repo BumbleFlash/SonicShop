@@ -21,21 +21,28 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.Cart;
+import com.example.sudarshan.sonicshop.CartRvAdapter;
+import com.example.sudarshan.sonicshop.LoginActivity;
 import com.example.sudarshan.sonicshop.Mail;
 import com.example.sudarshan.sonicshop.OrderSummaryAdapter;
 import com.example.sudarshan.sonicshop.R;
+import com.example.sudarshan.sonicshop.RetrofitBuilder;
+import com.example.sudarshan.sonicshop.RetrofitInterface;
 import com.example.sudarshan.sonicshop.adapters.DialogAdapter;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.example.sudarshan.sonicshop.models.Product;
+import com.example.sudarshan.sonicshop.users;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,9 +51,9 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 //    RecyclerView.Adapter adapter;
-    FirebaseRecyclerAdapter<Cart,Cartlistholder> adapter;
-DataSnapshot dataSnapshot;
-    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    CartRvAdapter adapter;
+
+
     Button b;
     DatabaseReference ref,cref,ccref;
     String userId;
@@ -75,24 +82,24 @@ DataSnapshot dataSnapshot;
 
         dialoglistview= (ListView)rootView.findViewById(R.id.dialog_rec_view);
        // mDialogAdapter = new DialogAdapter(getActivity(), null);
-     ref= FirebaseDatabase.getInstance().getReference("users");
-       userId =user.getUid();
-        ref.child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot d: dataSnapshot.getChildren())
-                {   Cart c=d.getValue(Cart.class);
-                    carts.add(c);
-                    sum= sum+ (Double.parseDouble(c.getUprice()+"")*c.getQuantity());
-                    Log.d("sum",""+sum);
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+//        ref.child(userId).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot d: dataSnapshot.getChildren())
+//                {   Cart c=d.getValue(Cart.class);
+//                    carts.add(c);
+//                    sum= sum+ (Double.parseDouble(c.getUprice()+"")*c.getQuantity());
+//                    Log.d("sum",""+sum);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +128,7 @@ DataSnapshot dataSnapshot;
                         StringBuffer body=new StringBuffer();
                         for(Cart ct: carts)
                         {
-                          body.append("\n" + ct.getUname()+" x"+ct.getQuantity()+" "+ (ct.getUprice()*ct.getQuantity()));
+                          body.append("\n" + ct.getProductName()+" x"+ct.getQuantity()+" "+ (Double.parseDouble(ct.getPrice())*ct.getQuantity()));
                         }
                         body.append("\nTotal Price: "+sum);
                         dialog.dismiss();
@@ -167,37 +174,53 @@ DataSnapshot dataSnapshot;
 
 
 
-
-
-
-
-
-
-        adapter= new FirebaseRecyclerAdapter<Cart, Cartlistholder>(Cart.class,R.layout.cart_card_layout,Cartlistholder.class,ref.child(userId)) {
+String email= LoginActivity.getActivityInstance().getData();
+ RetrofitInterface client = RetrofitBuilder.createService(RetrofitInterface.class);
+        Call<List<Cart>> call= client.getCart(email);
+        call.enqueue(new Callback<List<Cart>>() {
             @Override
-            protected void populateViewHolder(final Cartlistholder viewHolder, final Cart model, int position) {
-
-                viewHolder.cartviewname.setText("" + model.getUname());
-                viewHolder.cartviewprice.setText("Price: " + model.getUprice());
-                viewHolder.cartviewquantity.setText("Quantity: " + model.getQuantity());
-                Glide.with(getActivity()).load(model.getPic()).placeholder(R.drawable.ic_basket).into(viewHolder.img);
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        progressBar.hide();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
+            public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
+                List<Cart> cr= response.body();
+                adapter= new CartRvAdapter(cr,getContext());
+                progressBar.hide();
+                recyclerView.setAdapter(adapter);
 
             }
 
-        };
-        recyclerView.setAdapter(adapter);
+            @Override
+            public void onFailure(Call<List<Cart>> call, Throwable t) {
+
+            }
+        });
+
+
+
+
+//        adapter= new FirebaseRecyclerAdapter<Cart, Cartlistholder>(Cart.class,R.layout.cart_card_layout,Cartlistholder.class,ref.child(userId)) {
+//            @Override
+//            protected void populateViewHolder(final Cartlistholder viewHolder, final Cart model, int position) {
+//
+//                viewHolder.cartviewname.setText("" + model.getUname());
+//                viewHolder.cartviewprice.setText("Price: " + model.getUprice());
+//                viewHolder.cartviewquantity.setText("Quantity: " + model.getQuantity());
+//                Glide.with(getActivity()).load(model.getPic()).placeholder(R.drawable.ic_basket).into(viewHolder.img);
+//                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        progressBar.hide();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//
+//
+//            }
+//
+//        };
+        ;
 
 
 

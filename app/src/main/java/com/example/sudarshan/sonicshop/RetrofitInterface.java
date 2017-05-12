@@ -29,7 +29,13 @@ public interface RetrofitInterface {
     );
     @GET("loginand.jsp")
     Call<users> auth(
-            @Query("uname") String uname, @Query("upass") String upass
+            @Query("uemail") String uemail, @Query("upass") String upass
     );
+    @FormUrlEncoded
+    @POST("cart.jsp")
+    Call<Void> setProducts(@Field("cart") String Cart);
+    @GET("getcart.jsp")
+    Call<List<Cart>> getCart(@Query("email") String email);
+
 
 }

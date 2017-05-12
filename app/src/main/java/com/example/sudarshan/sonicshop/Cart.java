@@ -1,22 +1,42 @@
 package com.example.sudarshan.sonicshop;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Sudarshan on 20-03-2017.
  */
 
 public class Cart {
-    public String uname;
+    @SerializedName("uemail")
+    @Expose
+    private String uemail;
+    @SerializedName("ProductName")
+    @Expose
+    private String productName;
+    @SerializedName("Price")
+    @Expose
+    private String price;
+    @SerializedName("ProductID")
+    @Expose
+    private String productID;
+    @SerializedName("Picurl")
+    @Expose
+    private String picurl;
 
-    public double uprice;
-    public int cartitem;
-    public int quantity;
-    public String Picurl;
 
 
-    public String getPic() {
-        return Picurl;
+    @SerializedName("Quantity")
+    @Expose
+    private int quantity;
+
+    public String getUemail() {
+        return uemail;
     }
 
+    public void setUemail(String uemail) {
+        this.uemail = uemail;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -25,43 +45,36 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    public int getCartitem() {
-        return cartitem;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setCartitem(int cartitem) {
-        this.cartitem = cartitem;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public Cart(String uname, double uprice, int cartitem,int quantity) {
-        this.uname = uname;
-        this.uprice = uprice;
-        this.cartitem=cartitem;
-        this.quantity=quantity;
-
-    }
-    public Cart(String uname, double uprice,int quantity) {
-        this.uname = uname;
-        this.uprice = uprice;
-
-        this.quantity=quantity;
-    }
-    public Cart(){}
-
-    public String getUname() {
-        return uname;
+    public String getPrice() {
+        return price;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public double getUprice() {
-        return uprice;
+    public String getProductID() {
+        return productID;
     }
 
-    public void setUprice(double uprice) {
-        this.uprice = uprice;
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
+
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
+    }
+
 }

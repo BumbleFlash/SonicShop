@@ -2,6 +2,7 @@ package com.example.sudarshan.sonicshop;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,15 @@ import com.example.sudarshan.sonicshop.models.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static java.security.AccessController.getContext;
@@ -30,6 +35,9 @@ public class ProductRvAdapter extends RecyclerView.Adapter<ProductRvAdapter.View
 
     private List<Product> myItems;
     private Context mContext;
+//    private CartRvAdapter adapter;
+//    private  RecyclerView recyclerView;
+    String email;
 
     public ProductRvAdapter(List<Product> myItems, Context mContext) {
         this.myItems = myItems;
@@ -72,6 +80,40 @@ holder.inc.setOnClickListener(new View.OnClickListener() {
                     j--;
                     holder.quantity.setText(j + "");
                 }
+            }
+        });
+        holder.addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name= holder.itemName.getText().toString();
+                String price= holder.plistPriceText.getText().toString();
+                users u= new users();
+
+                int q= Integer.parseInt(holder.quantity.getText()+"");
+                email= LoginActivity.getActivityInstance().getData();
+                Log.e("email",email);
+                Cart c= new Cart();
+                c.setProductName(name);
+                c.setPrice(price);
+                c.setQuantity(q);
+                c.setUemail(email);
+
+                RetrofitInterface client= RetrofitBuilder.createService(RetrofitInterface.class);
+                Call<Void> call = client.setProducts(new Gson().toJson(c,Cart.class));
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                       Toast.makeText(getApplicationContext(),"Added to Cart",Toast.LENGTH_SHORT).show();
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
 

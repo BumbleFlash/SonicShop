@@ -35,9 +35,9 @@ public class DialogAdapter extends ArrayAdapter<Cart> {
         }
         Cart cart = getItem(position);
         TextView name = (TextView) listItemView.findViewById(R.id.order_name);
-        name.setText("" + cart.getUname() + " x" + cart.getQuantity());
+        name.setText("" + cart.getProductName() + " x" + cart.getQuantity());
         TextView price = (TextView) listItemView.findViewById(R.id.order_price);
-        price.setText("" + cart.getUprice());
+        price.setText("" + cart.getPrice());
         return listItemView;
     }
 

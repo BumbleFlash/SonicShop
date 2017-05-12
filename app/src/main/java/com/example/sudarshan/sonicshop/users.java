@@ -12,7 +12,6 @@ public class users {
     @SerializedName("upassword")
     @Expose
     public String upassword;
-
     @SerializedName("uemail")
     @Expose
     public String uemail;

@@ -1,12 +1,14 @@
 package com.example.sudarshan.sonicshop;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.models.Product;
 
 import java.util.List;
@@ -15,21 +17,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapter.ViewHolder> {
+public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder> {
+
 
     private List<Cart> myItems;
+    private Context context;
 
-
-    public OrderSummaryAdapter(List<Cart> items) {
+    public CartRvAdapter(List<Cart> items, Context context) {
         myItems = items;
-
+        this.context = context;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.order_dialog_layout, parent, false)); // TODO
+                .inflate(R.layout.cart_card_layout, parent, false));
     }
 
     @Override
@@ -42,40 +45,36 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         holder.setData(myItems.get(position));
     }
 
-    public interface ItemListener {
-        void onItemClick(Cart item);
-    }
 
-    static
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        @BindView(R.id.order_name)
-        TextView orderName;
-        @BindView(R.id.order_price)
-        TextView orderPrice;
         // TODO - Your view members
+        @BindView(R.id.cart_item_image)
+        ImageView cartItemImage;
+        @BindView(R.id.cart_item_name)
+        TextView cartItemName;
+        @BindView(R.id.cart_item_price)
+        TextView cartItemPrice;
+        @BindView(R.id.cart_item_quantity)
+        TextView cartItemQuantity;
         public Cart item;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
-
-            itemView.setOnClickListener(this);
+            ButterKnife.bind(this,itemView);
             // TODO instantiate/assign view members
         }
 
         public void setData(Cart item) {
             this.item = item;
-            orderName.setText(item.getProductName()+" x"+ item.getQuantity());
-            orderPrice.setText(String.valueOf(Double.parseDouble(item.getPrice())*item.getQuantity()));
+            cartItemName.setText(""+item.getProductName());
+            cartItemPrice.setText(""+item.getPrice());
+            cartItemQuantity.setText(""+item.getQuantity());
+            Glide.with(context).load(item.getPicurl()).placeholder(R.drawable.ic_basket).into(cartItemImage);
             // TODO set data to view
         }
 
-        @Override
-        public void onClick(View v) {
 
-        }
     }
 
 
