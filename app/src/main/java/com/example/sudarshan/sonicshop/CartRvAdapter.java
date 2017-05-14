@@ -1,7 +1,10 @@
 package com.example.sudarshan.sonicshop;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +22,10 @@ import butterknife.ButterKnife;
 
 public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder> {
 
-
+    static CartRvAdapter INS;
     private List<Cart> myItems;
     private Context context;
+    public double sum;
 
     public CartRvAdapter(List<Cart> items, Context context) {
         myItems = items;
@@ -33,6 +37,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cart_card_layout, parent, false));
+
     }
 
     @Override
@@ -70,6 +75,10 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
             cartItemName.setText(""+item.getProductName());
             cartItemPrice.setText(""+item.getPrice());
             cartItemQuantity.setText(""+item.getQuantity());
+            sum= sum+ (Double.parseDouble(item.getPrice()+"")*item.getQuantity());
+
+
+//
             Glide.with(context).load(item.getPicurl()).placeholder(R.drawable.ic_basket).into(cartItemImage);
             // TODO set data to view
         }

@@ -44,6 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.id.list;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -58,7 +60,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
     DatabaseReference ref,cref,ccref;
     String userId;
     ListView dialoglistview;
-    ArrayList<Cart> carts=new ArrayList<>();
+    List<Cart> cr;
     DialogAdapter mDialogAdapter;
     double sum;
     Mail m;
@@ -107,7 +109,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
 
                 LinearLayoutManager mLayoutManager;
                 dialog = new Dialog(getActivity());
-                OrderSummaryAdapter orderadapter = new OrderSummaryAdapter(carts);
+                OrderSummaryAdapter orderadapter = new OrderSummaryAdapter(cr);
                 dialog.setContentView(R.layout.activity_ordersummary);
                 RecyclerView rv=(RecyclerView)dialog.findViewById(R.id.dialog_rec_view);
                 mLayoutManager = new LinearLayoutManager(getActivity());
@@ -126,7 +128,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
                         m.set_from("suddileo@gmail.com");
                         m.set_subject("Your order summary ");
                         StringBuffer body=new StringBuffer();
-                        for(Cart ct: carts)
+                        for(Cart ct: cr)
                         {
                           body.append("\n" + ct.getProductName()+" x"+ct.getQuantity()+" "+ (Double.parseDouble(ct.getPrice())*ct.getQuantity()));
                         }
@@ -180,10 +182,15 @@ String email= LoginActivity.getActivityInstance().getData();
         call.enqueue(new Callback<List<Cart>>() {
             @Override
             public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
-                List<Cart> cr= response.body();
+                cr= response.body();
+
                 adapter= new CartRvAdapter(cr,getContext());
                 progressBar.hide();
                 recyclerView.setAdapter(adapter);
+                for(int i=0;i<cr.size();i++)
+                {
+                    Log.v("List",cr.get(i)+"");
+                }
 
             }
 
