@@ -153,7 +153,7 @@ holder.inc.setOnClickListener(new View.OnClickListener() {
         public void setData(Product item,Context mcont) {
             this.item = item;
             itemName.setText(item.getProductName());
-            plistPriceText.setText(item.getPrice());
+            plistPriceText.setText("Rs."+item.getPrice());
             Glide.with(mcont).load(item.getPicurl()).placeholder(R.drawable.ic_basket).into(listImage);
 
 

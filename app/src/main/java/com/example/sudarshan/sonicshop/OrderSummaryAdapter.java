@@ -1,12 +1,17 @@
 package com.example.sudarshan.sonicshop;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sudarshan.sonicshop.fragments.CartFragment;
 import com.example.sudarshan.sonicshop.models.Product;
 
 import java.util.List;
@@ -18,10 +23,15 @@ import butterknife.ButterKnife;
 public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapter.ViewHolder> {
 
     private List<Cart> myItems;
+    public double sum;
+
+    Context context;
 
 
-    public OrderSummaryAdapter(List<Cart> items) {
+    public OrderSummaryAdapter(List<Cart> items,Context context) {
         myItems = items;
+
+        this.context=context;
 
     }
 
@@ -42,13 +52,10 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         holder.setData(myItems.get(position));
     }
 
-    public interface ItemListener {
-        void onItemClick(Cart item);
-    }
 
-    static
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.order_name)
         TextView orderName;
@@ -61,23 +68,23 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            itemView.setOnClickListener(this);
+            Intent intent= new Intent(context,CartFragment.class);
+            intent.putExtra("Sum",sum);
             // TODO instantiate/assign view members
         }
 
+
         public void setData(Cart item) {
             this.item = item;
-            orderName.setText(item.getProductName()+" x"+ item.getQuantity());
-            orderPrice.setText(String.valueOf(Double.parseDouble(item.getPrice())*item.getQuantity()));
+            orderName.setText(item.getProductName() + " x" + item.getQuantity());
+            orderPrice.setText(String.valueOf(Double.parseDouble(item.getPrice()) * item.getQuantity()));
+
+
+
             // TODO set data to view
         }
 
-        @Override
-        public void onClick(View v) {
 
-        }
     }
 
-
 }
-                                

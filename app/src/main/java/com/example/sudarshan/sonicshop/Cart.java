@@ -23,8 +23,15 @@ public class Cart {
     @SerializedName("Picurl")
     @Expose
     private String picurl;
+    private double sum;
 
+    public double getSum() {
+        return sum;
+    }
 
+    public void setSum(double sum) {
+        this.sum = sum;
+    }
 
     @SerializedName("Quantity")
     @Expose

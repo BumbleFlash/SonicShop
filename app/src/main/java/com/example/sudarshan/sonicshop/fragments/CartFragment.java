@@ -2,6 +2,7 @@ package com.example.sudarshan.sonicshop.fragments;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.sudarshan.sonicshop.AdapterInterface;
 import com.example.sudarshan.sonicshop.Cart;
 import com.example.sudarshan.sonicshop.CartRvAdapter;
 import com.example.sudarshan.sonicshop.LoginActivity;
@@ -44,7 +46,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.attr.value;
 import static android.R.id.list;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,6 +86,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
         progressBar.show();
          b= (Button)rootView.findViewById(R.id.place_order);
 
+         sum= getActivity().getIntent().getDoubleExtra("Sum",sum);
         dialoglistview= (ListView)rootView.findViewById(R.id.dialog_rec_view);
        // mDialogAdapter = new DialogAdapter(getActivity(), null);
 
@@ -102,22 +107,28 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
 //
 //            }
 //        });
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Dialog dialog;
+                dialog = new Dialog(getActivity());
+
 
                 LinearLayoutManager mLayoutManager;
-                dialog = new Dialog(getActivity());
-                OrderSummaryAdapter orderadapter = new OrderSummaryAdapter(cr);
+
+                OrderSummaryAdapter orderadapter = new OrderSummaryAdapter(cr,getContext());
+
+                Log.d("Sum",sum+"");
                 dialog.setContentView(R.layout.activity_ordersummary);
                 RecyclerView rv=(RecyclerView)dialog.findViewById(R.id.dialog_rec_view);
                 mLayoutManager = new LinearLayoutManager(getActivity());
+                Button confirm=(Button)dialog.findViewById(R.id.ok);
+                confirm.setText("Pay(₹"+ sum+")");
                 rv.setHasFixedSize(true);
                 rv.setLayoutManager(mLayoutManager);
                 rv.setAdapter(orderadapter);
-                Button confirm=(Button)dialog.findViewById(R.id.ok);
-                confirm.setText("Pay(₹"+ sum+")");
+
                 Button cancel=(Button)dialog.findViewById(R.id.cancel);
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -184,7 +195,12 @@ String email= LoginActivity.getActivityInstance().getData();
             public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
                 cr= response.body();
 
-                adapter= new CartRvAdapter(cr,getContext());
+                adapter= new CartRvAdapter(cr, getContext(), new AdapterInterface() {
+                    @Override
+                    public void pass(double value) {
+                        sum= value;
+                    }
+                });
                 progressBar.hide();
                 recyclerView.setAdapter(adapter);
                 for(int i=0;i<cr.size();i++)
@@ -241,6 +257,7 @@ String email= LoginActivity.getActivityInstance().getData();
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
+
 
     public static class Cartlistholder extends RecyclerView.ViewHolder
 {

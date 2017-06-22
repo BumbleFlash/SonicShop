@@ -26,10 +26,12 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     private List<Cart> myItems;
     private Context context;
     public double sum;
+    AdapterInterface adapterInterface;
 
-    public CartRvAdapter(List<Cart> items, Context context) {
+    public CartRvAdapter(List<Cart> items, Context context,AdapterInterface adapterInterface) {
         myItems = items;
         this.context = context;
+        this.adapterInterface=adapterInterface;
     }
 
 
@@ -72,10 +74,11 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
 
         public void setData(Cart item) {
             this.item = item;
-            cartItemName.setText(""+item.getProductName());
-            cartItemPrice.setText(""+item.getPrice());
-            cartItemQuantity.setText(""+item.getQuantity());
-            sum= sum+ (Double.parseDouble(item.getPrice()+"")*item.getQuantity());
+            cartItemName.setText("Item Name:  "+item.getProductName());
+            cartItemPrice.setText("Item Price:   "+item.getPrice());
+            cartItemQuantity.setText("Quantity:    "+item.getQuantity());
+            sum = sum + (Double.parseDouble(item.getPrice() + "") * item.getQuantity());
+            adapterInterface.pass(sum);
 
 
 //
