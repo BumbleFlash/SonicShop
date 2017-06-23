@@ -86,8 +86,8 @@ holder.inc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name= holder.itemName.getText().toString();
-                String price= holder.plistPriceText.getText().toString();
-                users u= new users();
+                double price= Double.parseDouble(holder.plistPriceText.getText().toString().substring(3));
+
 
                 int q= Integer.parseInt(holder.quantity.getText()+"");
                 email= LoginActivity.getActivityInstance().getData();

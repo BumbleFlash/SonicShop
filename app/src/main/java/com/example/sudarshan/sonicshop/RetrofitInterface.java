@@ -36,6 +36,9 @@ public interface RetrofitInterface {
     Call<Void> setProducts(@Field("cart") String Cart);
     @GET("getcart.jsp")
     Call<List<Cart>> getCart(@Query("email") String email);
+    @FormUrlEncoded
+    @POST("updateCart.jsp")
+    Call<Void> sendUpdate(@Field("Update") String update);
 
 
 }

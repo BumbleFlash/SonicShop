@@ -16,22 +16,17 @@ public class Cart {
     private String productName;
     @SerializedName("Price")
     @Expose
-    private String price;
+    private double price;
     @SerializedName("ProductID")
     @Expose
     private String productID;
     @SerializedName("Picurl")
     @Expose
     private String picurl;
-    private double sum;
 
-    public double getSum() {
-        return sum;
-    }
 
-    public void setSum(double sum) {
-        this.sum = sum;
-    }
+
+
 
     @SerializedName("Quantity")
     @Expose
@@ -60,11 +55,11 @@ public class Cart {
         this.productName = productName;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

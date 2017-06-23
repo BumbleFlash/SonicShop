@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="2.5dp"
+        android:paddingBottom="2.5dp"
+        android:paddingLeft="0dip"
+        android:paddingRight="0dip">
+
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="horizontal">
+
+            <!-- ListRow Left sied Thumbnail image -->
+
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="7dip"
+                android:padding="2dip"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/list_image"
+                    android:layout_width="50dip"
+                    android:layout_height="50dip"
+                    android:src="@drawable/ic_basket"/>
+            </LinearLayout>
+
+            <!-- Title Of Song -->
+
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/thumbnail"
+                    android:text="Pineapple"
+                    android:textColor="#040404"
+                    android:textSize="15dip"
+                    android:typeface="sans"
+                    android:gravity="center_horizontal"/>
+
+
+                <LinearLayout
+                    android:id="@+id/cart_plus_minus_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_name"
+                    android:orientation="horizontal" >
+                    <TextView
+                        android:id="@+id/plist_price_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="Rs. 250"
+                        android:textColor="#1d1d1d"
+                        android:textSize="12dip"
+                        android:textStyle="bold" />
+
+
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/plist_weight_text"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal|center_vertical"-->
+                    <!--android:paddingRight="15dip"-->
+                    <!--android:text="1000 gm"-->
+                    <!--android:textColor="#343434"-->
+                    <!--android:textSize="12dip" />-->
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+                <Button
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/ic_minus"
+                    android:id="@+id/dec"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:id="@+id/quantity"/>
+                <Button
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/ic_plus"
+                    android:id="@+id/inc"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                >
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+    <Button
+        android:layout_below="@id/dialog_rec_view"
+        android:layout_width="wrap_content"
+        android:id="@+id/update"
+        android:text="Update"
+        android:layout_marginTop="60dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_below="@id/dialog_rec_view"
+        android:layout_width="wrap_content"
+        android:id="@+id/cancel"
+        android:text="cancel"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@+id/ok"
+        android:layout_height="wrap_content"  />
+
+</RelativeLayout>

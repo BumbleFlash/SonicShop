@@ -47,6 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.R.attr.value;
+import static android.R.id.edit;
 import static android.R.id.list;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
@@ -86,7 +87,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
         progressBar.show();
          b= (Button)rootView.findViewById(R.id.place_order);
 
-         sum= getActivity().getIntent().getDoubleExtra("Sum",sum);
+
         dialoglistview= (ListView)rootView.findViewById(R.id.dialog_rec_view);
        // mDialogAdapter = new DialogAdapter(getActivity(), null);
 
@@ -107,6 +108,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
 //
 //            }
 //        });
+        ;
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +143,7 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
                         StringBuffer body=new StringBuffer();
                         for(Cart ct: cr)
                         {
-                          body.append("\n" + ct.getProductName()+" x"+ct.getQuantity()+" "+ (Double.parseDouble(ct.getPrice())*ct.getQuantity()));
+                          body.append("\n" + ct.getProductName()+" x"+ct.getQuantity()+" "+ (Double.parseDouble(ct.getPrice()+"")*ct.getQuantity()));
                         }
                         body.append("\nTotal Price: "+sum);
                         dialog.dismiss();

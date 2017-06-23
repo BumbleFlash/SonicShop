@@ -77,7 +77,7 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         public void setData(Cart item) {
             this.item = item;
             orderName.setText(item.getProductName() + " x" + item.getQuantity());
-            orderPrice.setText(String.valueOf(Double.parseDouble(item.getPrice()) * item.getQuantity()));
+            orderPrice.setText(String.valueOf(Double.parseDouble(item.getPrice()+"") * item.getQuantity()));
 
 
 
