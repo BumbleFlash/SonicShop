@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,8 +25,10 @@ import com.bumptech.glide.Glide;
 import com.example.sudarshan.sonicshop.AdapterInterface;
 import com.example.sudarshan.sonicshop.Cart;
 import com.example.sudarshan.sonicshop.CartRvAdapter;
+import com.example.sudarshan.sonicshop.Change;
 import com.example.sudarshan.sonicshop.LoginActivity;
 import com.example.sudarshan.sonicshop.Mail;
+import com.example.sudarshan.sonicshop.NavDrawer;
 import com.example.sudarshan.sonicshop.OrderSummaryAdapter;
 import com.example.sudarshan.sonicshop.R;
 import com.example.sudarshan.sonicshop.RetrofitBuilder;
@@ -37,6 +40,7 @@ import com.example.sudarshan.sonicshop.users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.gson.Gson;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
@@ -59,7 +63,8 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
     RecyclerView.LayoutManager layoutManager;
 //    RecyclerView.Adapter adapter;
     CartRvAdapter adapter;
-
+    Change c;
+    String email= LoginActivity.getActivityInstance().getData();
 
     Button b;
     DatabaseReference ref,cref,ccref;
@@ -131,49 +136,65 @@ public class CartFragment extends Fragment implements NavigationView.OnNavigatio
                 rv.setLayoutManager(mLayoutManager);
                 rv.setAdapter(orderadapter);
 
+                c=new Change("",0,3,email);
                 Button cancel=(Button)dialog.findViewById(R.id.cancel);
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        m= new Mail("suddileo@gmail.com","pammas22");
-                        String[] to= {FirebaseAuth.getInstance().getCurrentUser().getEmail()};
-                        m.set_to(to);
-                        m.set_from("suddileo@gmail.com");
-                        m.set_subject("Your order summary ");
-                        StringBuffer body=new StringBuffer();
-                        for(Cart ct: cr)
-                        {
-                          body.append("\n" + ct.getProductName()+" x"+ct.getQuantity()+" "+ (Double.parseDouble(ct.getPrice()+"")*ct.getQuantity()));
-                        }
-                        body.append("\nTotal Price: "+sum);
-                        dialog.dismiss();
-                        m.set_body(""+body);
-
-                        try {
-
-
-                            if (m.send()) {
-                                //dialog.dismiss();
-                                Toast.makeText(getActivity(), "Thank you for ordering from sonic shop", Toast.LENGTH_LONG).show();
-                                //System.exit(0);
-                                ref.child(userId).setValue(null);
-
-
-
-
-                                //Snackbar.make(findViewById(android.R.id.content), "Booking Confirmed!", Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                // dialog.dismiss();
-                                Toast.makeText(getActivity(), "Failed to send Prescription !", Toast.LENGTH_LONG).show();
-
-                                //Snackbar.make(findViewById(android.R.id.content), "Booking not confirmed!", Snackbar.LENGTH_SHORT).show();
+                        RetrofitInterface client= RetrofitBuilder.createService(RetrofitInterface.class);
+                        Call<Void> call=client.sendUpdate(new Gson().toJson(c, Change.class));
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                FragmentManager f=  getActivity().getSupportFragmentManager();
+                                f.beginTransaction().replace(R.id.content_frame,new CartFragment()).commit();
+                                dialog.dismiss();
                             }
 
-                        } catch (Exception e) {
-                            //Toast.makeText(MailApp.this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
-                            Log.e("MailApp", "Could not send email", e);
-                        }
-                    }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+//                        m= new Mail("suddileo@gmail.com","pammas22");
+//                        String[] to= {FirebaseAuth.getInstance().getCurrentUser().getEmail()};
+//                        m.set_to(to);
+//                        m.set_from("suddileo@gmail.com");
+//                        m.set_subject("Your order summary ");
+//                        StringBuffer body=new StringBuffer();
+//                        for(Cart ct: cr)
+//                        {
+//                          body.append("\n" + ct.getProductName()+" x"+ct.getQuantity()+" "+ (Double.parseDouble(ct.getPrice()+"")*ct.getQuantity()));
+//                        }
+//                        body.append("\nTotal Price: "+sum);
+//                        dialog.dismiss();
+//                        m.set_body(""+body);
+//
+//                        try {
+//
+//
+//                            if (m.send()) {
+//                                //dialog.dismiss();
+//                                Toast.makeText(getActivity(), "Thank you for ordering from sonic shop", Toast.LENGTH_LONG).show();
+//                                //System.exit(0);
+//                                ref.child(userId).setValue(null);
+//
+//
+//
+//
+//                                //Snackbar.make(findViewById(android.R.id.content), "Booking Confirmed!", Snackbar.LENGTH_SHORT).show();
+//                            } else {
+//                                // dialog.dismiss();
+//                                Toast.makeText(getActivity(), "Failed to send Prescription !", Toast.LENGTH_LONG).show();
+//
+//                                //Snackbar.make(findViewById(android.R.id.content), "Booking not confirmed!", Snackbar.LENGTH_SHORT).show();
+//                            }
+//
+//                        } catch (Exception e) {
+//                            //Toast.makeText(MailApp.this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
+//                            Log.e("MailApp", "Could not send email", e);
+//                        }
+                  }
 
                 });
                 cancel.setOnClickListener(new View.OnClickListener() {
