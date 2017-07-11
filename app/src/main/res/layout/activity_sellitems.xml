@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sudarshan.sonicshop.Sellitems">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="40sp"
+        android:id="@+id/sell"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="25dp"
+        android:text="SELL IT HERE!"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:id="@+id/textPN"
+        android:layout_below="@id/sell"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/product_name"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Product Name"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:layout_centerHorizontal="true"
+            android:nextFocusForward="@+id/textPR"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/textPR"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/textPN"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/product_price"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Price"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:layout_centerHorizontal="true"
+            android:nextFocusForward="@+id/spinner_cat"/>
+    </android.support.design.widget.TextInputLayout>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/spinner_cat"
+        android:layout_below="@id/textPR">
+    </Spinner>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/spinner_cat"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/round_corner"
+        android:backgroundTint="#039be5"
+        android:padding="12dp"
+        android:text="Sell"/>
+
+</RelativeLayout>

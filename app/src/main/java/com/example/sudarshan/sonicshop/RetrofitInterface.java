@@ -39,6 +39,12 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("updateCart.jsp")
     Call<Void> sendUpdate(@Field("Update") String update);
-
+    @FormUrlEncoded
+    @POST("sell.jsp")
+    Call<Void> sendItem(@Field("Item") String email);
+    //@GET("orderhistory.jsp")
+//    Call<List<OrderHN>> getHistory(@Query("email") String email,@Query("choice") String choice);
+//    @GET("orderhistory2.jsp")
+//    Call<List<OrderHN>> getHistoryItems(@Query("email") String email);
 
 }

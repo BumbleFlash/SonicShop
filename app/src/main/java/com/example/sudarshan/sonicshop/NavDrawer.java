@@ -1,14 +1,16 @@
 package com.example.sudarshan.sonicshop;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +19,6 @@ import android.widget.TextView;
 
 import com.example.sudarshan.sonicshop.fragments.CartFragment;
 import com.example.sudarshan.sonicshop.fragments.ProductListFragment;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
-
-import static android.R.attr.id;
 
 public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,7 +44,13 @@ TextView mail,n,em,nm;
         nav= (NavigationView) findViewById(R.id.nav_view);
         onNavigationItemSelected(nav.getMenu().findItem(R.id.nav_products));
         onNavigationItemSelected(nav.getMenu().getItem(0));
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Sellitems.class));
+            }
+        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -107,9 +109,11 @@ TextView mail,n,em,nm;
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.content_frame, new CartFragment()).commit();
         }
-//         else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
+         else if (id == R.id.nav_order_history) {
+            setTitle("Order History");
+            FragmentManager fm = getSupportFragmentManager();
+//            fm.beginTransaction().replace(R.id.content_frame, new Orderhistory()).commit();
+        }
 //
 //        } else if (id == R.id.nav_share) {
 //
@@ -117,9 +121,11 @@ TextView mail,n,em,nm;
 //
 //        }
         View header=nav.getHeaderView(0);
+        String m= LoginActivity.getActivityInstance().getData();
         em= (TextView)header.findViewById(R.id.text_email);
         nm= (TextView)header.findViewById(R.id.text_name);
         img= (ImageView)header.findViewById(R.id.display_photo);
+        em.setText(m);
       //  String email= user.getEmail();
         //String name= user.getDisplayName();
         //em.setText(""+ email);

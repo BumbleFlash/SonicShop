@@ -41,12 +41,15 @@
     app:indicatorColor="#483d8b"
     />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/place_order"
-        android:gravity="bottom"
+        android:gravity="center"
         android:layout_centerHorizontal="true"
         android:text="Place Order"
+        android:background="@drawable/round_corner"
+        android:backgroundTint="#039be5"
+        android:textColor="#FFFFFF"
         android:layout_alignBottom="@id/recycler_view"/>
 
 </RelativeLayout>

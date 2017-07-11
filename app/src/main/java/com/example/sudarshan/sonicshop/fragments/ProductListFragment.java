@@ -1,7 +1,9 @@
 package com.example.sudarshan.sonicshop.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,10 +18,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sudarshan.sonicshop.NavDrawer;
 import com.example.sudarshan.sonicshop.ProductRvAdapter;
 import com.example.sudarshan.sonicshop.R;
 import com.example.sudarshan.sonicshop.RetrofitBuilder;
 import com.example.sudarshan.sonicshop.RetrofitInterface;
+import com.example.sudarshan.sonicshop.Sellitems;
 import com.example.sudarshan.sonicshop.adapters.ProductAdapter;
 import com.example.sudarshan.sonicshop.models.Product;
 import com.example.sudarshan.sonicshop.users;
@@ -171,6 +175,13 @@ private FirebaseRecyclerAdapter<Product, ListItemViewHolder> mAdapter;
             inc= (Button)itemView.findViewById(R.id.inc);
             quantity= (TextView)itemView.findViewById(R.id.quantity);
             dec= (Button)itemView.findViewById(R.id.dec);
+//            FloatingActionButton fab= (FloatingActionButton)itemView.findViewById(R.id.fab);
+//            fab.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
 
 
         }

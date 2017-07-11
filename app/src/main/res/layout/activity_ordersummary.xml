@@ -19,15 +19,22 @@
         android:layout_width="wrap_content"
         android:id="@+id/ok"
         android:text="Confirm"
-        android:layout_height="wrap_content" />
+        android:background="@drawable/round_corner"
+        android:backgroundTint="#039be5"
+        android:textColor="#FFFFFF"
+        android:layout_height="40dp" />
     <Button
         android:layout_below="@id/dialog_rec_view"
         android:layout_width="wrap_content"
         android:id="@+id/cancel"
         android:text="cancel"
-        android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/ok"
-        android:layout_height="wrap_content"  />
+        android:layout_marginLeft="70dp"
+        android:layout_toRightOf="@id/ok"
+
+        android:background="@drawable/round_corner"
+        android:backgroundTint="#039be5"
+        android:textColor="#FFFFFF"
+        android:layout_height="40dp"  />
 </RelativeLayout>
 
 </ScrollView>

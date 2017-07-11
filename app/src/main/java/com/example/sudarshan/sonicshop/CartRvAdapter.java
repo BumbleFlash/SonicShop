@@ -27,11 +27,11 @@ import retrofit2.Response;
 
 import static com.example.sudarshan.sonicshop.R.id.cart_item_price;
 import static com.example.sudarshan.sonicshop.R.id.delete;
-import static com.example.sudarshan.sonicshop.R.id.quantity;
-import static com.facebook.FacebookSdk.getApplicationContext;
+    import static com.example.sudarshan.sonicshop.R.id.quantity;
+    import static com.facebook.FacebookSdk.getApplicationContext;
 
 
-public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder> {
+    public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder> {
 
     static CartRvAdapter INS;
     int choice =0;

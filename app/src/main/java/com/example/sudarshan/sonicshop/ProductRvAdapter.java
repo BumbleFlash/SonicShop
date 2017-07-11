@@ -1,6 +1,8 @@
 package com.example.sudarshan.sonicshop;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +61,7 @@ public class ProductRvAdapter extends RecyclerView.Adapter<ProductRvAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.setData(myItems.get(position), mContext);
+
 holder.inc.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -139,13 +142,13 @@ holder.inc.setOnClickListener(new View.OnClickListener() {
         @BindView(R.id.add_to_cart)
         Button addToCart;
 
-
         // TODO - Your view members
         public Product item;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
 //            itemView.setOnClickListener(this);
             // TODO instantiate/assign view members
         }
